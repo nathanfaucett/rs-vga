@@ -1,0 +1,14 @@
+[package]
+name = "vga"
+version = "0.1.0"
+authors = ["nathanfaucett <nathanfaucett@gmail.com>"]
+
+keywords = ["vga"]
+description = "Video Graphics Array"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/nathanfaucett/rs-vga.git"
+homepage = "https://github.com/nathanfaucett/rs-vga"
+
+[dependencies]
+spin = "0.4.0"

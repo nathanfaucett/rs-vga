@@ -1,0 +1,4 @@
+vga
+=====
+
+Video Graphics Array
