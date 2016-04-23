@@ -146,12 +146,12 @@ pub fn clear_console() {
 
 #[macro_export]
 macro_rules! vga_println {
-    ($fmt:expr) => (vga_kprint!(concat!($fmt, "\n")));
-    ($fmt:expr, $($arg:tt)*) => (vga_kprint!(concat!($fmt, "\n"), $($arg)*));
+    ($fmt:expr) => (vga_print!(concat!($fmt, "\n")));
+    ($fmt:expr, $($arg:tt)*) => (vga_print!(concat!($fmt, "\n"), $($arg)*));
 }
 
 #[macro_export]
-macro_rules! vga_kprint {
+macro_rules! vga_print {
     ($($arg:tt)*) => ({
         use core::fmt::Write;
         let mut b = $crate::BUFFER.lock();
