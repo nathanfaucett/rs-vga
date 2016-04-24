@@ -1,15 +1,18 @@
 #![feature(const_fn)]
-#![feature(lang_items)]
 #![no_std]
 
+
 extern crate spin;
+
 
 use spin::Mutex;
 use core::fmt;
 
+
 pub const DEFAULT_COLOR: ColorCode = ColorCode::new(Color::LightGreen, Color::Black);
 const CONSOLE_COLS: isize = 80;
 const CONSOLE_ROWS: isize = 25;
+
 
 #[repr(u8)]
 pub enum Color {
@@ -48,10 +51,12 @@ struct VgaCell {
 }
 
 pub static BUFFER: Mutex<VgaBuffer> = Mutex::new(VgaBuffer {
-    buffer: [VgaCell {
-        character: ' ' as u8,
-        color: DEFAULT_COLOR,
-    }; (CONSOLE_ROWS * CONSOLE_COLS * 2) as usize],
+    buffer: [
+        VgaCell {
+            character: ' ' as u8,
+            color: DEFAULT_COLOR,
+        }; (CONSOLE_ROWS * CONSOLE_COLS * 2) as usize
+    ],
     position: 0,
 });
 
@@ -139,7 +144,7 @@ impl fmt::Write for VgaBuffer {
     }
 }
 
-pub fn clear_console() {
+pub fn clear() {
     let mut b = BUFFER.lock();
     b.clear();
 }
