@@ -10,8 +10,8 @@ use core::fmt;
 
 
 pub const DEFAULT_COLOR: ColorCode = ColorCode::new(Color::LightGreen, Color::Black);
-const CONSOLE_COLS: isize = 80;
-const CONSOLE_ROWS: isize = 25;
+const COLS: isize = 80;
+const ROWS: isize = 25;
 
 
 #[repr(u8)]
@@ -55,32 +55,32 @@ pub static BUFFER: Mutex<VgaBuffer> = Mutex::new(VgaBuffer {
         VgaCell {
             character: ' ' as u8,
             color: DEFAULT_COLOR,
-        }; (CONSOLE_ROWS * CONSOLE_COLS * 2) as usize
+        }; (ROWS * COLS * 2) as usize
     ],
     position: 0,
 });
 
 pub struct VgaBuffer {
-    buffer: [VgaCell; (CONSOLE_ROWS * CONSOLE_COLS * 2) as usize],
+    buffer: [VgaCell; (ROWS * COLS * 2) as usize],
     position: usize,
 }
 
 impl VgaBuffer {
     fn write_byte(&mut self, byte: u8, color: ColorCode) {
         if byte == ('\n' as u8) {
-            let current_line = (self.position as isize) / CONSOLE_COLS;
+            let current_line = (self.position as isize) / COLS;
 
-            let next_line = if current_line + 1 > CONSOLE_ROWS {
+            let next_line = if current_line + 1 > ROWS {
 
-                let end = CONSOLE_ROWS * CONSOLE_COLS;
+                let end = ROWS * COLS;
 
-                for i in CONSOLE_COLS..(end) {
-                    let prev = i - CONSOLE_COLS;
+                for i in COLS..(end) {
+                    let prev = i - COLS;
                     self.buffer[prev as usize] = self.buffer[i as usize];
 
                 }
 
-                for i in (end - CONSOLE_COLS)..(end) {
+                for i in (end - COLS)..(end) {
                     let cell = &mut self.buffer[i as usize];
                     *cell = VgaCell {
                         character: ' ' as u8,
@@ -88,12 +88,12 @@ impl VgaBuffer {
                     };
                 }
 
-                CONSOLE_ROWS - 1
+                ROWS - 1
             } else {
                 current_line + 1
             };
 
-            self.position = (next_line * CONSOLE_COLS) as usize;
+            self.position = (next_line * COLS) as usize;
         } else {
             let cell = &mut self.buffer[self.position];
 
@@ -120,7 +120,7 @@ impl VgaBuffer {
     }
 
     fn clear(&mut self) {
-        for i in 0..(CONSOLE_ROWS * CONSOLE_COLS * 2) {
+        for i in 0..(ROWS * COLS * 2) {
             let cell = &mut self.buffer[i as usize];
             *cell = VgaCell {
                 character: ' ' as u8,
@@ -129,7 +129,6 @@ impl VgaBuffer {
         }
 
         self.reset_position();
-
         self.flush();
     }
 }
