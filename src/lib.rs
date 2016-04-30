@@ -10,8 +10,8 @@ use core::fmt;
 
 
 pub const DEFAULT_COLOR: ColorCode = ColorCode::new(Color::LightGreen, Color::Black);
-const COLS: isize = 80;
-const ROWS: isize = 25;
+pub const COLS: isize = 80;
+pub const ROWS: isize = 25;
 
 
 #[repr(u8)]
