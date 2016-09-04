@@ -11,4 +11,4 @@ repository = "https://github.com/nathanfaucett/rs-vga.git"
 homepage = "https://github.com/nathanfaucett/rs-vga"
 
 [dependencies]
-spin = "0.4.0"
+spin = "0.4.3"
